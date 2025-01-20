@@ -33,7 +33,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login setIsAuth={setIsAuth} />} />
-        <Route path="/Createpost" element={<Createpost />} />
+        <Route path="/Createpost" element={<Createpost isAuth={isAuth}/>} />
       </Routes>
     </div>
   )
