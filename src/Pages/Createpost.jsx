@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import { addDoc, collection } from 'firebase/firestore'
+import { addDoc, collection, serverTimestamp } from 'firebase/firestore'
 import { db, auth } from '../../Firebase-config'
 import { useNavigate } from "react-router-dom";
 
@@ -9,17 +9,22 @@ import { useNavigate } from "react-router-dom";
 
     const [title, setTitle] = useState("");
     const [postText, seetPostText] = useState("");
+    const[loading, setLoading] = useState(false);
 
     const postCollectionRef = collection(db, "All-posts");
 
-    const Createpost = async () => {
+    const Createpost = async (e) => {
+      e.preventDefault()
+      setLoading(true);
       await addDoc(postCollectionRef, {
         author: { name: auth.currentUser.displayName, id: auth.currentUser.uid, email: auth.currentUser.email},
         title,
-        postText
-      })
+        postText,
+        timestamp: serverTimestamp()
+      });
+      setLoading(false);
       navigate('/');
-    }
+    };
 
 
 
@@ -31,12 +36,13 @@ import { useNavigate } from "react-router-dom";
   return (
     <div className='createpostPage'>
 
-    <div className="cpContainer">
+    <form className="cpContainer" onSubmit={Createpost}>
       <h1>Create New Post</h1>
       <div className="inputGp">
         <label htmlFor="">Title:</label>
         <input
          type="text" 
+         required
          placeholder='Title...'
          onChange={(e) => setTitle(e.target.value)}
         />
@@ -44,6 +50,7 @@ import { useNavigate } from "react-router-dom";
       <div className="inputGp">
         <label htmlFor="">Post:</label>
         <textarea name=""
+         required
          placeholder='Post...' 
          onChange={(e) => seetPostText(e.target.value)}
          id=""
@@ -51,8 +58,11 @@ import { useNavigate } from "react-router-dom";
          rows="10" 
         />
       </div>
-      <button onClick={Createpost}>Submit Post</button>
-    </div>
+      <button type="submit" disabled={loading}>
+      {loading ? "Submitting..." : "Submit Post"}  
+      </button>
+    </form>
+    {loading && <div className="spinner">Loading...</div>}
     </div>
   )
 }
