@@ -62,8 +62,8 @@ a {
     display: grid;
     place-items: center;
   }
-
-.cpContainer {
+  
+  .cpContainer {
     width: 70vw;
     height: auto;
     padding: 20px;
@@ -258,4 +258,23 @@ a {
     .homePage .post{
       padding-bottom: 8vh;
     }
+  }
+
+
+  .user-name{
+    margin-top: 5vh;
+  }
+
+  .spinner  {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50vh;
+    font-size: 50px;
+    color: #f4eaea;
+  }
+
+  .noPosts{
+    font-size: 50px;
+    color: #f4eaea;
   }
