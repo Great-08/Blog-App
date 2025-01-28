@@ -215,13 +215,20 @@ a {
   }
   
   .deletePost button {
-    border: none;
-  
+    border: none;  
     background: none;
     font-size: 30px;
     cursor: pointer;
   }
   
+  .updatePost button {
+    border: none;  
+    background: none;
+    font-size: 30px;
+    cursor: pointer;
+  }
+  
+
   .post .postTextContainer {
     height: 60%;
     max-height: 400px;

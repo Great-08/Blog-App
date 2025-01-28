@@ -7,6 +7,8 @@ import Login from './Pages/Login';
 import Createpost from './Pages/Createpost';
 import { signOut } from "firebase/auth";
 import { auth } from '../Firebase-config';
+import EditPost from "./Pages/EditPost";
+
 const App = () => {
 
   const navigate = useNavigate();
@@ -34,6 +36,7 @@ const App = () => {
         <Route path="/" element={<Home isAuth={isAuth} />} />
         <Route path="/login" element={<Login setIsAuth={setIsAuth} />}/>
         <Route path="/createpost" element={<Createpost isAuth={isAuth} />}/>
+        <Route path="/editpost/:id" element={<EditPost isAuth={isAuth} />}/>
       </Routes>
     </div>
   )

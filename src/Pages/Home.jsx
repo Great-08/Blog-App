@@ -1,13 +1,16 @@
 import { useEffect, useState } from 'react';
-import { getDocs, collection, deleteDoc, doc } from 'firebase/firestore';
+import { getDocs, collection, deleteDoc, updateDoc, doc } from 'firebase/firestore';
 import { db, auth } from '../../Firebase-config';
 import { MdDelete } from "react-icons/md";
 import moment from 'moment';
+import { useNavigate } from 'react-router-dom';
+import { FaEdit } from "react-icons/fa";
 
 const Home = ({isAuth}) => {
 
   const [postLists, setPostList] = useState([]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   const postCollectionRef = collection(db, "All-posts")
 
@@ -31,7 +34,15 @@ const Home = ({isAuth}) => {
     }
   }
 
-    
+  const editPost = async (id, updatedPost) => {
+    const postDoc = doc(db, "All-posts", id);
+    await updateDoc(postDoc, updatedPost);
+    setPostList(postLists.map(post => (post.id === id ? { ...post, ...updatedPost } : post)));
+  };
+
+  const navigateToEditPost = (id) => {
+    navigate(`/editpost/${id}`);
+  };
 
   return (
     <div  className='homePage'>
@@ -52,9 +63,14 @@ const Home = ({isAuth}) => {
                 </div>
 
                 <div className="deletePost">
-                  {isAuth && post.author.id === auth.currentUser.uid && <button onClick={() => {deletePost(post.id)}}> <MdDelete size={20} color='white'/></button>}
+                  {isAuth && post.author.id === auth.currentUser.uid && 
+                  <>
+                  <button onClick={() => {deletePost(post.id)}}> <MdDelete size={20} color='white'/></button>
+                  <button onClick={() => {navigateToEditPost(post.id)}}><FaEdit size={20} color='white'/></button>
+                  </>
+                  }
                 </div>
-              </div>
+              </div>  
 
               <div className="postTextContainer">{post.postText}</div>
               <h3 className='user-name'>@{post.author?.name}</h3>
