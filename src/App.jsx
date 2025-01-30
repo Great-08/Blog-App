@@ -8,6 +8,8 @@ import Createpost from './Pages/Createpost';
 import { signOut } from "firebase/auth";
 import { auth } from '../Firebase-config';
 import EditPost from "./Pages/EditPost";
+import './index.css';
+import Register from "./Pages/Register"
 
 const App = () => {
 
@@ -37,6 +39,7 @@ const App = () => {
         <Route path="/login" element={<Login setIsAuth={setIsAuth} />}/>
         <Route path="/createpost" element={<Createpost isAuth={isAuth} />}/>
         <Route path="/editpost/:id" element={<EditPost isAuth={isAuth} />}/>
+        <Route path="/register" element={<Register setIsAuth={setIsAuth} />}/>
       </Routes>
     </div>
   )
